@@ -1,36 +1,33 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import "./SimpleStorage.sol";
+contract SimpleStorage {
+    // Basic types: boolean,unit,address,bytes,
+    bool hasFacouriteNumber=false;
+    uint256 favouriteNumber=87;
+    uint256[] listofFavouriteNumbers;
 
-contract StorageFactory {
-    SimpleStorage[] public listofSimpleStorageContracts;
-    address[] public listofSimpleStorageAddresses;
-
-    // Function to create a new SimpleStorage contract and store its address
-    function createSimpleStorageContract() public {
-        SimpleStorage newSimpleStorageContract = new SimpleStorage();
-        listofSimpleStorageContracts.push(newSimpleStorageContract);
-        listofSimpleStorageAddresses.push(address(newSimpleStorageContract)); // Store address of the contract
+    struct Person {
+        uint favouriteNumber;
+        string name;
     }
 
-    // Function to store a number in the specific SimpleStorage contract
-    function sfStore(uint256 _simpleStorageIndex, uint256 _newSimpleStorageNumber) public {
-        // Ensure the index is valid
-        require(_simpleStorageIndex < listofSimpleStorageContracts.length, "Index out of bounds");
-
-        // Access the SimpleStorage contract and store the value
-        SimpleStorage mySimpleStorage = listofSimpleStorageContracts[_simpleStorageIndex];
-        mySimpleStorage.store(_newSimpleStorageNumber);
+    Person public myFriend=Person(7,"Debopriya");
+    //dynamic array
+    Person[]public listofPeople;
+    uint256 favouriteNO; // favouriteNo gets initialised as 0 when not done anything
+    // int favouriteNumber1=-88;
+    // string favouriteNumber2="star this repo";
+    // address myaddress=0xB155C8e122D30EA2153A90cF2C4F61CaA5d04F52;
+    // bytes32 favouriteBytes32="cat";
+    function store(uint256 _favouriteNO)
+    public{
+ favouriteNO=_favouriteNO;
     }
-
-    // Function to retrieve a number from the specific SimpleStorage contract
-    function sfGet(uint256 _simpleStorageIndex) public view returns (uint256) {
-        // Ensure the index is valid
-        require(_simpleStorageIndex < listofSimpleStorageContracts.length, "Index out of bounds");
-
-        // Access the SimpleStorage contract and retrieve the value
-        SimpleStorage mySimpleStorage = listofSimpleStorageContracts[_simpleStorageIndex];
-        return mySimpleStorage.retrieve();
-    }
+   function retrive() public view returns (uint256){
+    return favouriteNO;
+   }
+   function addPerson(string memory _name,uint _favouriteNumber) public {
+    listofPeople.push(Person(_favouriteNumber, _name));
+   }
 }
